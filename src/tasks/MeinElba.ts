@@ -9,7 +9,7 @@ import TaskBaseCheerio from "../TaskBaseCheerio";
 
 function toAmount({ amount, currency }) {
   return {
-    amount: String(amount),
+    amount: typeof amount === 'number' ? String(amount) : amount?.source
     currency,
   };
 }
