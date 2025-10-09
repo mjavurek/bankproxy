@@ -228,12 +228,7 @@ export default class extends TaskBaseCheerio {
 
   override async *rawTransactionsForAccount(accountDetails: AccountDetails) {
     const token = (accountDetails.entryReferenceFrom || "").split("@");
-    await this.apiPOST("/bankingzv-umsatz/umsatz-ui/rest/kontoumsaetze", {
-      predicate: {
-        ibans: [accountDetails.iban],
-        buchungVon: token[1],
-      },
-    });
+    await this.apiGET("/bankingzv-umsatzuebersicht/umsatzuebersicht-ui/rest/kontoumsaetze/" + accountDetails.iban);
     let umsaetze = this.json.list;
     const tokenId = parseInt(token[0], 10);
     if (tokenId) umsaetze = umsaetze.filter((t) => t.id > tokenId);
