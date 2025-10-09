@@ -237,7 +237,9 @@ export default class extends TaskBaseCheerio {
   }
 
   override mapRawTransaction(item: any): Transaction {
-    const { amount } = item.betrag;
+    const amount = typeof item.betrag.amount === 'number'
+	    ? item.betrag.amount
+	    : item.betrag.amount?.parsedValue;
     const reference = [
       item.zahlungsreferenz,
       item.verwendungszweckZeile1,
