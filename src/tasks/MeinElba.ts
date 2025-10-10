@@ -231,8 +231,9 @@ export default class extends TaskBaseCheerio {
     await this.apiGET("/bankingzv-umsatzuebersicht/umsatzuebersicht-ui/rest/kontoumsaetze/" + accountDetails.iban, {});
     let umsaetze = this.json.list;
     const tokenId = parseInt(token[0], 10);
-    if (tokenId) umsaetze = umsaetze.filter((t) => t.id > tokenId);
-
+	const fromDate = new Date(token[1]);
+    if (tokenId) umsaetze = umsaetze.filter((t) => t.id > tokenId && new Date(t.buchungstag) >= fromDate);
+	  
     for (const item of umsaetze) yield item;
   }
 
